@@ -14,20 +14,11 @@ from prettytable import PrettyTable
 
 print("***************** Tactics Not Antics ******************")
 print("*****          Monte Carlo Match Simulator        *****")
-print("*****        Version 1.0: November 17, 2021       *****")
-print("*****        Last Update: January  08, 2021       *****")
-print("*******************************************************")
-print("******************* PL TEAMS 2021-22 ******************")
-print("* Arsenal | Aston Villa | Brentford     | Brighton    *")
-print("* Burnley | Chelsea     | Crystal Palace| Everton     *")
-print("* Leeds   | Leicester   | Liverpool     | Man City    *")
-print("* Man Utd | Newcastle   | Norwich City  | Southampton *")
-print("* West Ham| Tottenham   | Watford       | Wolves      *")
-print("*******************************************************")
 
-num_simulations = 20000
+
+num_simulations = 33000
 choice = input("* Keyboard or csv: ")
-if choice == "Keyboard":
+if choice == "K":
     print ("Reading data from the keyboard.")
     input_home_team = input("* Add home team: ")
     input_home_team_xg_str = input("* Add home team xG: ")
@@ -35,6 +26,8 @@ if choice == "Keyboard":
     input_away_team = input("* Add away team: ")
     input_away_team_xg_str = input("* Add away team xG: ")
     input_away_team_xg = float(input_away_team_xg_str)
+    input_draw_team_xg_str = input("* Add draw team xG: ")
+    input_draw_team_xg = float(input_draw_team_xg_str)
     #print the simulation table and run simulations
     print ("********************")
     print ("*                  *")
@@ -53,8 +46,11 @@ if choice == "Keyboard":
         #get simulation start time
         start_time = time.time()
         #run the sim - generate a random Poisson distribution
-        target_home_goals_scored = np.random.poisson(input_home_team_xg)
-        target_away_goals_scored = np.random.poisson(input_away_team_xg)
+        home_team_xg = input_home_team_xg
+        away_team_xg = input_away_team_xg
+        phi = (1 + 5 ** 0.5) / 2
+        target_home_goals_scored = np.random.poisson(home_team_xg)
+        target_away_goals_scored = np.random.poisson(away_team_xg)
         home_win = 0
         away_win = 0
         draw = 0
@@ -269,56 +265,56 @@ elif choice == "csv":
         max_score = 5
         assemble_scores = [[0 for x in range(max_score)] for y in range(max_score)]
         for i in range(total_scores):
-        if score_mat[i][0] == 0 and score_mat[i][1] == 0:
-            assemble_scores[0][0] += 1
-        elif score_mat[i][0] == 0 and score_mat[i][1] == 1:
-            assemble_scores[0][1] += 1
-        elif score_mat[i][0] == 0 and score_mat[i][1] == 2:
-            assemble_scores[0][2] += 1     
-        elif score_mat[i][0] == 0 and score_mat[i][1] == 3:
-            assemble_scores[0][3] += 1     
-        elif score_mat[i][0] == 0 and score_mat[i][1] == 4:
-            assemble_scores[0][4] += 1    
-        elif score_mat[i][0] == 1 and score_mat[i][1] == 0:
-            assemble_scores[1][0] += 1
-        elif score_mat[i][0] == 1 and score_mat[i][1] == 1:
-            assemble_scores[1][1] += 1     
-        elif score_mat[i][0] == 1 and score_mat[i][1] == 2:
-            assemble_scores[1][2] += 1     
-        elif score_mat[i][0] == 1 and score_mat[i][1] == 3:
-            assemble_scores[1][3] += 1     
-        elif score_mat[i][0] == 1 and score_mat[i][1] == 4:
-            assemble_scores[1][4] += 1
-        elif score_mat[i][0] == 2 and score_mat[i][1] == 0:
-            assemble_scores[2][0] += 1
-        elif score_mat[i][0] == 2 and score_mat[i][1] == 1:
-            assemble_scores[2][1] += 1     
-        elif score_mat[i][0] == 2 and score_mat[i][1] == 2:
-            assemble_scores[2][2] += 1     
-        elif score_mat[i][0] == 2 and score_mat[i][1] == 3:
-            assemble_scores[2][3] += 1     
-        elif score_mat[i][0] == 2 and score_mat[i][1] == 4:
-            assemble_scores[2][4] += 1
-        elif score_mat[i][0] == 3 and score_mat[i][1] == 0:
-            assemble_scores[3][0] += 1
-        elif score_mat[i][0] == 3 and score_mat[i][1] == 1:
-            assemble_scores[3][1] += 1     
-        elif score_mat[i][0] == 3 and score_mat[i][1] == 2:
-            assemble_scores[3][2] += 1     
-        elif score_mat[i][0] == 3 and score_mat[i][1] == 3:
-            assemble_scores[3][3] += 1     
-        elif score_mat[i][0] == 3 and score_mat[i][1] == 4:
-            assemble_scores[3][4] += 1            
-        elif score_mat[i][0] == 4 and score_mat[i][1] == 0:
-            assemble_scores[4][0] += 1
-        elif score_mat[i][0] == 4 and score_mat[i][1] == 1:
-            assemble_scores[4][1] += 1     
-        elif score_mat[i][0] == 4 and score_mat[i][1] == 2:
-            assemble_scores[4][2] += 1     
-        elif score_mat[i][0] == 4 and score_mat[i][1] == 3:
-            assemble_scores[4][3] += 1     
-        elif score_mat[i][0] == 4 and score_mat[i][1] == 4:
-            assemble_scores[4][4] += 1     
+            if score_mat[i][0] == 0 and score_mat[i][1] == 0:
+                assemble_scores[0][0] += 1
+            elif score_mat[i][0] == 0 and score_mat[i][1] == 1:
+                assemble_scores[0][1] += 1
+            elif score_mat[i][0] == 0 and score_mat[i][1] == 2:
+                assemble_scores[0][2] += 1
+            elif score_mat[i][0] == 0 and score_mat[i][1] == 3:
+                assemble_scores[0][3] += 1
+            elif score_mat[i][0] == 0 and score_mat[i][1] == 4:
+                assemble_scores[0][4] += 1
+            elif score_mat[i][0] == 1 and score_mat[i][1] == 0:
+                assemble_scores[1][0] += 1
+            elif score_mat[i][0] == 1 and score_mat[i][1] == 1:
+                assemble_scores[1][1] += 1
+            elif score_mat[i][0] == 1 and score_mat[i][1] == 2:
+                assemble_scores[1][2] += 1
+            elif score_mat[i][0] == 1 and score_mat[i][1] == 3:
+                assemble_scores[1][3] += 1
+            elif score_mat[i][0] == 1 and score_mat[i][1] == 4:
+                assemble_scores[1][4] += 1
+            elif score_mat[i][0] == 2 and score_mat[i][1] == 0:
+                assemble_scores[2][0] += 1
+            elif score_mat[i][0] == 2 and score_mat[i][1] == 1:
+                assemble_scores[2][1] += 1
+            elif score_mat[i][0] == 2 and score_mat[i][1] == 2:
+                assemble_scores[2][2] += 1
+            elif score_mat[i][0] == 2 and score_mat[i][1] == 3:
+                assemble_scores[2][3] += 1
+            elif score_mat[i][0] == 2 and score_mat[i][1] == 4:
+                assemble_scores[2][4] += 1
+            elif score_mat[i][0] == 3 and score_mat[i][1] == 0:
+                assemble_scores[3][0] += 1
+            elif score_mat[i][0] == 3 and score_mat[i][1] == 1:
+                assemble_scores[3][1] += 1
+            elif score_mat[i][0] == 3 and score_mat[i][1] == 2:
+                assemble_scores[3][2] += 1
+            elif score_mat[i][0] == 3 and score_mat[i][1] == 3:
+                assemble_scores[3][3] += 1
+            elif score_mat[i][0] == 3 and score_mat[i][1] == 4:
+                assemble_scores[3][4] += 1
+            elif score_mat[i][0] == 4 and score_mat[i][1] == 0:
+                assemble_scores[4][0] += 1
+            elif score_mat[i][0] == 4 and score_mat[i][1] == 1:
+                assemble_scores[4][1] += 1
+            elif score_mat[i][0] == 4 and score_mat[i][1] == 2:
+                assemble_scores[4][2] += 1
+            elif score_mat[i][0] == 4 and score_mat[i][1] == 3:
+                assemble_scores[4][3] += 1
+            elif score_mat[i][0] == 4 and score_mat[i][1] == 4:
+                assemble_scores[4][4] += 1
             
         #calculate percentages and print the score matrix
         print ("**********************************")        
