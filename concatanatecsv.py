@@ -17,7 +17,7 @@ def concatenate_csv_files(folder_path, output_file):
 
 
 if __name__ == "__main__":
-    folder_path = "/home/wayne/Datasets/FootballData"
+    folder_path = "FootballData"
     output_file = "allPdfs.csv"
 
     concatenate_csv_files(folder_path, output_file)
