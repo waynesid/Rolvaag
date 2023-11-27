@@ -5,19 +5,19 @@ import pickle
 import torch
 
 
+from NeuralNet import NeuralNetworkClassificationModel
+
+
+
 st.title("predictions")
 
 DATA_URL = "allPdfs.csv"
 
-def load_model():
-    with open('neuralnet.pickle','rb') as file:
-        model=pickle.load(file)
-        
-    return model
+pickled_model = pickle.load(open('model.pkl', 'rb'))
 
 
 def make_prediction(model,features):
-    prediction=model.predict(features.reshape(1,-1))
+    prediction=model.predict(features)
     return prediction[0]
 
 def load_data(nrows):
@@ -44,8 +44,13 @@ def input_selection():
 
   predict_button= st.button("predict", type="primary")
   if predict_button:
-    X_new = np.array([[FTHG,FTAG, HTHG,HTAG]])
+    X_new = np.array([[1.08,1.08,1.00,1.60,1.00]])
+    X_net = torch.FloatTensor(X_new)
+    prediction = pickled_model(X_net)
 
-    
+    st.subheader(f"The estimated prediction is ${prediction}")
+
+    return prediction
+
 
 input_selection()
