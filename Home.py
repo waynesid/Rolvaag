@@ -1,10 +1,24 @@
 import streamlit as st
 import pandas as pd
+import numpy as np
 import pickle
+import torch
+
 
 st.title("predictions")
 
 DATA_URL = "allPdfs.csv"
+
+def load_model():
+    with open('neuralnet.pickle','rb') as file:
+        model=pickle.load(file)
+        
+    return model
+
+
+def make_prediction(model,features):
+    prediction=model.predict(features.reshape(1,-1))
+    return prediction[0]
 
 def load_data(nrows):
     data = pd.read_csv(DATA_URL, nrows=nrows)
@@ -28,8 +42,10 @@ def input_selection():
   HTHG = st.number_input('Insert a HTHG')
   HTAG = st.number_input('Insert a HTAG')
 
-  st.button("predict", type="primary")
-  if st.button("predict"):
-    model = pickle.load("neuralnet.pickle")
+  predict_button= st.button("predict", type="primary")
+  if predict_button:
+    X_new = np.array([[FTHG,FTAG, HTHG,HTAG]])
+
+    
 
 input_selection()
