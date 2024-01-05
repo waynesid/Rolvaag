@@ -2,6 +2,9 @@ import streamlit as st
 import joblib
 import numpy as np
 import pandas as pd
+from sklearn.preprocessing import LabelEncoder
+
+le = LabelEncoder()
 
 DATA_URL = "allPdfs.csv"
 
@@ -29,12 +32,8 @@ data=load_model()
 regressor=data
 
 #Creating the dependent variable class
-fac
-tor = pd.factorize(data['FTR'])
-data.FTR = factor[0]
-definitions = factor[1]
-print(data.FTR.head())
-print(definitions)
+# Fit the encoder on the column
+le.fit(['A', 'H', 'D'])
 
 def make_prediction(model,features):
     prediction=model.predict(features.reshape(1,-1))
@@ -61,9 +60,8 @@ def prediction_page():
         predicted_class = data.predict(X)
 
         # Reverse factorize the prediction
-        reversefactor = dict(zip(range(3), definitions))
-        predicted_label = reversefactor.get(predicted_class[0])
-        st.subheader(f"The predicted result is ${predicted_label[0]:.2f}")
+        predicted_label = le.inverse_transform(predicted_class)
+        st.subheader(f"The predicted result is {predicted_label}")
 
 
 prediction_page()
