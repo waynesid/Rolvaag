@@ -24,7 +24,7 @@ data_load_state.text('Loading data...done!')
 st.title("Random Forest Model")
 
 def load_model():
-    with open('randomforestmodel.pkl','rb') as file:
+    with open('gridsearchCV.pkl','rb') as file:
         data=joblib.load(file)
         
     return data
