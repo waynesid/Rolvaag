@@ -21,7 +21,7 @@ data_load_state.text('Loading data...done!')
 
 
 
-st.title("predictions")
+st.title("Random Forest Model")
 
 def load_model():
     with open('randomforestmodel.pkl','rb') as file:
