@@ -3,7 +3,7 @@ import pandas as pd
 
 def preprocess_data():
     # Specify the directory you want to use
-    directory = r"C:\Users\USER\Wayne\Rolvaag\FootballData"
+    directory = r"C:\\Users\\USER\\Wayne\\Rolvaag\\FootballData"
     output_file = 'final_output.csv'
 
     # Specify the columns you want to keep
@@ -33,6 +33,10 @@ def preprocess_data():
                         all_data = pd.concat([all_data, data])
                 except pd.errors.ParserError:
                     print(f"Skipping file due to parsing error: {filename}")
+                except TypeError:
+                    print(f"Skipping file due to TypeError: {filename}")
+                except UnicodeDecodeError:
+                    print(f"Skipping file due to UnicodeDecodeError: {filename}")
 
     # Save the DataFrame to the CSV file
     all_data.to_csv(output_file, index=False)
