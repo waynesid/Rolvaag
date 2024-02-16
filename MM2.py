@@ -28,7 +28,7 @@ def predict_next_outcome(historical_results):
 # Example usage
 if __name__ == "__main__":
     # Historical match results (0: home win, 1: away win, 2: draw)
-    historical_results = [0, 1, 2, 0, 1, 2, 0, 1, 2]
+    historical_results = [0, 1, 2, 0, 1, 2, 0, 0, 2]
 
     next_outcome = predict_next_outcome(historical_results)
     if next_outcome == 0:
