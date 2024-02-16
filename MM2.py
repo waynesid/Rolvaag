@@ -1,7 +1,7 @@
 import numpy as np
 
 # Hypothetical transition probabilities (modify based on historical data)
-P = np.array([[0.3, 0.2, 0.2],  # Home win to home win, away win, draw
+P = np.array([[0.6, 0.2, 0.2],  # Home win to home win, away win, draw
               [0.3, 0.5, 0.2],  # Away win to home win, away win, draw
               [0.1, 0.1, 0.8]]) # Draw to home win, away win, draw
 
@@ -9,8 +9,12 @@ P = np.array([[0.3, 0.2, 0.2],  # Home win to home win, away win, draw
 P_normalized = P / P.sum(axis=1, keepdims=True)
 
 def predict_next_outcome(historical_results):
-    # Assume the last match outcome as the current state
-    current_state = historical_results[-1]
+    # Initialize the current state based on the entire historical sequence
+    current_state = historical_results[0]  # Assume the first match outcome
+
+    # Update the current state using the entire historical sequence
+    for result in historical_results[1:]:
+        current_state = result
 
     # Predict next match outcome
     next_state_probs = P_normalized[current_state]
